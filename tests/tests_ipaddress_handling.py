@@ -1,13 +1,15 @@
 import unittest
 from ipaddress import AddressValueError, NetmaskValueError
 import os
-
+import io
+from unittest import mock
 from network_utils.src.net_and_server_utils.ipaddress_handling import IPv4NetworkHandling, IPv6NetworkHandling
 
 
 class TestsIPAddressHandling(unittest.TestCase):
     def setUp(self) -> None:
         self.ipaddress_ipv4_normal = '192.168.0.0/24'
+        self.ipaddress_ipv4_single = '192.168.0.0/32'
         self.ipaddress_ipv4_host_bits_set = '123.45.67.89/27'
         self.ipaddress_ipv4_invalid_address = '256.0.0.0/27'
         self.ipaddress_ipv4_invalid_netmask = '192.168.0.0/33'
@@ -40,6 +42,12 @@ class TestsIPAddressHandling(unittest.TestCase):
     def test_net_mask_value_error_ipv4(self):
         with self.assertRaises(NetmaskValueError):
             _ = IPv4NetworkHandling(self.ipaddress_ipv4_invalid_netmask)
+
+    def test_ipv4_addresses_print(self):
+        addr = IPv4NetworkHandling(self.ipaddress_ipv4_single)
+        with mock.patch('sys.stdout', new=io.StringIO()) as fake_stdout:
+            addr.print_all_ipaddress_included()
+        self.assertEqual(list(fake_stdout.getvalue().split('\n'))[1], '192.168.0.0')
 
     def test_write_to_file_ipv4(self):
         addr = IPv4NetworkHandling(self.ipaddress_ipv4_normal)

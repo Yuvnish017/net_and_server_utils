@@ -1,6 +1,8 @@
 import ssl
 import unittest
-from network_utils.src.net_and_server_utils.ssl_socket import SSLSocketClient
+from network_utils.src.net_and_server_utils.ssl_socket import SSLSocketClient, SSLSocketServer
+from unittest import mock
+import io
 
 
 class TestSSLSocket(unittest.TestCase):
@@ -10,6 +12,8 @@ class TestSSLSocket(unittest.TestCase):
         self.port = 443
         self.response_file = 'socket_server_response.txt'
         self.certificates = "/etc/ssl/certs/ca-bundle.crt"
+        self.server_certificate_file = None
+        self.server_private_key_file = None
 
     def tests_client_class_import(self):
         SSLSocketClient()
@@ -46,6 +50,23 @@ class TestSSLSocket(unittest.TestCase):
             for _ in file:
                 count += 1
         self.assertEqual(count, 1)
+
+    def tests_server_creation(self):
+        server = SSLSocketServer()
+        server.create_context(self.server_certificate_file, self.server_private_key_file)
+
+    def tests_server_binding_and_listening(self):
+        server = SSLSocketServer()
+        server.create_context(self.server_certificate_file, self.server_private_key_file)
+        server.bind_and_listen(self.server_hostname_with_ssl_certificate, self.port)
+
+    def tests_server_accepting_requests(self):
+        server = SSLSocketServer()
+        server.create_context(self.server_certificate_file, self.server_private_key_file)
+        server.bind_and_listen(self.server_hostname_with_ssl_certificate, self.port)
+        with mock.patch('sys.stdout', new=io.StringIO()) as fake_stdout:
+            server.accept_and_process_requests()
+        self.assertEqual(list(fake_stdout.getvalue().split('\n'))[0], 'hello')
 
 
 if __name__ == '__main__':

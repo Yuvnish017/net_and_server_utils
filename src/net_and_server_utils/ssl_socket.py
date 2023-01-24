@@ -55,3 +55,37 @@ class SSLSocketClient:
             print(f"Received data: {received_data}")
             with open(filename, 'a', encoding='utf-8') as file:
                 file.write(received_data + '\n')
+
+
+class SSLSocketServer:
+    def __init__(self):
+        self.certificate_file = None
+        self.private_key_file = None
+        self.hostname = None
+        self.port = None
+        self.context = None
+        self.server_socket = None
+
+    def create_context(self, certificate_file, private_key_file):
+        self.certificate_file = certificate_file
+        self.private_key_file = private_key_file
+        self.context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+        self.context.load_cert_chain(self.certificate_file, self.private_key_file)
+
+    def bind_and_listen(self, hostname, port):
+        self.hostname = hostname
+        self.port = port
+        self.server_socket = socket.socket()
+        self.server_socket.bind((self.hostname, self.port))
+        self.server_socket.listen(5)
+
+    def accept_and_process_requests(self):
+        while True:
+            new_socket, from_addr = self.server_socket.accept()
+            conn_stream = self.context.wrap_socket(new_socket, server_side=True)
+            try:
+                data = str(conn_stream.recv(1024), 'utf-8')
+                print(f'Received data: {data}')
+            finally:
+                conn_stream.shutdown(socket.SHUT_RDWR)
+                conn_stream.close()
