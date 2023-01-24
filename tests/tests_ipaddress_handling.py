@@ -1,3 +1,7 @@
+"""
+Test cases for ipaddress_handling module of net_and_server_utils
+"""
+
 import unittest
 from ipaddress import AddressValueError, NetmaskValueError
 import os
@@ -7,7 +11,14 @@ from network_utils.src.net_and_server_utils.ipaddress_handling import IPv4Networ
 
 
 class TestsIPAddressHandling(unittest.TestCase):
+    """
+    Test cases class
+    """
     def setUp(self) -> None:
+        """
+        set up fixtures for the test cases
+        :return:
+        """
         self.ipaddress_ipv4_normal = '192.168.0.0/24'
         self.ipaddress_ipv4_single = '192.168.0.0/32'
         self.ipaddress_ipv4_host_bits_set = '123.45.67.89/27'
@@ -18,10 +29,10 @@ class TestsIPAddressHandling(unittest.TestCase):
         self.filename_for_ipaddresses_ipv4 = 'ipaddresses_ipv4.txt'
         self.filename_for_ipaddresses_ipv6 = 'ipaddresses_ipv6.txt'
 
-    def test_class_imports(self):
-        IPv4NetworkHandling(self.ipaddress_ipv4_normal)
-
     def test_network_ip_address_ipv4(self):
+        """
+        tests the ipv4 network class for normal network address
+        """
         addr = IPv4NetworkHandling(self.ipaddress_ipv4_normal)
         self.assertEqual(addr.version(), 4)
         self.assertEqual(addr.max_prefixlen(), 32)
@@ -29,6 +40,9 @@ class TestsIPAddressHandling(unittest.TestCase):
         self.assertEqual(addr.netmask(), '255.255.255.0')
 
     def test_host_bit_set_ipv4(self):
+        """
+        tests the case where the address given has host bits set
+        """
         addr = IPv4NetworkHandling(self.ipaddress_ipv4_host_bits_set)
         self.assertEqual(addr.version(), 4)
         self.assertEqual(addr.max_prefixlen(), 32)
@@ -36,20 +50,32 @@ class TestsIPAddressHandling(unittest.TestCase):
         self.assertEqual(addr.netmask(), '255.255.255.224')
 
     def test_address_value_error_ipv4(self):
+        """
+        tests for value error in case of wrong address given
+        """
         with self.assertRaises(AddressValueError):
             _ = IPv4NetworkHandling(self.ipaddress_ipv4_invalid_address)
 
     def test_net_mask_value_error_ipv4(self):
+        """
+        tests for net mask value in case of wrong net mask
+        """
         with self.assertRaises(NetmaskValueError):
             _ = IPv4NetworkHandling(self.ipaddress_ipv4_invalid_netmask)
 
     def test_ipv4_addresses_print(self):
+        """
+        tests ip addresses print function
+        """
         addr = IPv4NetworkHandling(self.ipaddress_ipv4_single)
         with mock.patch('sys.stdout', new=io.StringIO()) as fake_stdout:
             addr.print_all_ipaddress_included()
         self.assertEqual(list(fake_stdout.getvalue().split('\n'))[1], '192.168.0.0')
 
     def test_write_to_file_ipv4(self):
+        """
+        tests whether the ip addresses are written to file correctly or not
+        """
         addr = IPv4NetworkHandling(self.ipaddress_ipv4_normal)
         addr.write_to_file_ipaddresses_included(self.filename_for_ipaddresses_ipv4)
         self.assertTrue(os.path.exists(self.filename_for_ipaddresses_ipv4))
@@ -57,6 +83,9 @@ class TestsIPAddressHandling(unittest.TestCase):
         self.assertEqual(count, 256)
 
     def test_ipaddress_ipv6_ipv6_handling(self):
+        """
+        tests ipv6 network class with normal ipv6 network address
+        """
         addr = IPv6NetworkHandling(self.ipaddress_ipv6_normal)
         self.assertEqual(addr.version(), 6)
         self.assertEqual(addr.max_prefixlen(), 128)
@@ -64,6 +93,9 @@ class TestsIPAddressHandling(unittest.TestCase):
         self.assertEqual(addr.netmask(), 'ffff:ffff:ffff:ffff:ffff:ffff:ffff:0000')
 
     def test_ipaddress_ipv6_host_bits_set(self):
+        """
+        tests the ipv6 class with address having hosts bit set
+        """
         addr = IPv6NetworkHandling(self.ipaddress_ipv6_host_bit_set)
         self.assertEqual(addr.version(), 6)
         self.assertEqual(addr.max_prefixlen(), 128)
@@ -71,6 +103,9 @@ class TestsIPAddressHandling(unittest.TestCase):
         self.assertEqual(addr.netmask(), 'ffff:0000:0000:0000:0000:0000:0000:0000')
 
     def test_ipv6_addresses_write_to_file(self):
+        """
+        tests whether the ip addresses are written to file correctly or not
+        """
         addr = IPv6NetworkHandling(self.ipaddress_ipv6_normal)
         addr.write_to_file_ipaddresses_included(self.filename_for_ipaddresses_ipv6)
         self.assertTrue(os.path.exists(self.filename_for_ipaddresses_ipv6))
@@ -78,14 +113,25 @@ class TestsIPAddressHandling(unittest.TestCase):
         self.assertEqual(count, 65536)
 
     def test_ipaddress_ipv6_with_ipv4_handling(self):
+        """
+        tests for value error
+        In case where ipv6 address is passed to ipv4 class
+        """
         with self.assertRaises(AddressValueError):
             _ = IPv4NetworkHandling(self.ipaddress_ipv6_normal)
 
     def test_ipaddress_ipv4_with_ipv6_handling(self):
+        """
+        tests for value error
+        In case when ipv4 address is passed to ipv6 class
+        """
         with self.assertRaises(AddressValueError):
             _ = IPv6NetworkHandling(self.ipaddress_ipv4_normal)
 
     def tearDown(self) -> None:
+        """
+        tear down fixture for test cases
+        """
         del self.ipaddress_ipv4_normal
         del self.ipaddress_ipv4_host_bits_set
         del self.ipaddress_ipv4_invalid_address

@@ -1,3 +1,7 @@
+"""
+Test cases for ssl_socket module of net_and_server_utils
+"""
+
 import ssl
 import unittest
 from network_utils.src.net_and_server_utils.ssl_socket import SSLSocketClient, SSLSocketServer
@@ -7,6 +11,12 @@ import io
 
 class TestSSLSocket(unittest.TestCase):
     def setUp(self) -> None:
+        """
+        set up fixture for the test cases.
+        For some cases it is assumed that a server is already running in the background
+        Change the server hostnames and ports accordingly prior to running the tests
+        :return:
+        """
         self.server_hostname_with_ssl_certificate = '127.0.0.1'
         self.server_hostname_without_ssl_certificate = 'www.expired.badssl.com'
         self.port = 11000
@@ -16,18 +26,24 @@ class TestSSLSocket(unittest.TestCase):
         self.server_certificate_file = '/Users/yuvnish.malhotra/Desktop/python_training_experiments/certificate.pem'
         self.server_private_key_file = '/Users/yuvnish.malhotra/Desktop/python_training_experiments/key.pem'
 
-    def tests_client_class_import(self):
-        SSLSocketClient()
-
     def tests_default_context_creation(self):
+        """
+        tests the context creation for client
+        """
         curr_client = SSLSocketClient()
         curr_client.default_context_creation()
 
     def tests_manual_context_creation(self):
+        """
+        tests the manual context creation for the client
+        """
         curr_client = SSLSocketClient()
         curr_client.manual_context_creation(self.certificates)
 
     def tests_ssl_cert_verification_error(self):
+        """
+        tests the raising of SSLCertVerificationError
+        """
         with self.assertRaises(ssl.SSLCertVerificationError):
             curr_client = SSLSocketClient()
             curr_client.default_context_creation()
@@ -35,12 +51,18 @@ class TestSSLSocket(unittest.TestCase):
                                           self.port)
 
     def tests_connect_to_server_with_ssl_certificate(self):
+        """
+        tests successful connection to the server
+        """
         curr_client = SSLSocketClient()
         curr_client.manual_context_creation(self.server_certificate_file)
         curr_client.connect_to_server(self.server_hostname_with_ssl_certificate,
                                       self.port)
 
     def tests_communicate_and_save(self):
+        """
+        tests whether the data is transferred and received correctly
+        """
         curr_client = SSLSocketClient()
         curr_client.default_context_creation()
         # curr_client.manual_context_creation(self.server_certificate_file)
@@ -54,15 +76,24 @@ class TestSSLSocket(unittest.TestCase):
         self.assertEqual(count, 1)
 
     def tests_server_creation(self):
+        """
+        tests the creation of server
+        """
         server = SSLSocketServer()
         server.create_context(self.server_certificate_file, self.server_private_key_file)
 
     def tests_server_binding_and_listening(self):
+        """
+        tests the binding of server to the hostname and port
+        """
         server = SSLSocketServer()
         server.create_context(self.server_certificate_file, self.server_private_key_file)
         server.bind_and_listen(self.server_hostname_with_ssl_certificate, self.port)
 
     def tests_server_accepting_requests(self):
+        """
+        tests whether the server is processing the requests correctly or not
+        """
         server = SSLSocketServer()
         server.create_context(self.server_certificate_file, self.server_private_key_file)
         server.bind_and_listen(self.server_hostname_with_ssl_certificate, self.port)
