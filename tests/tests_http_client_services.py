@@ -9,6 +9,7 @@ class TestHTTPClientServices(unittest.TestCase):
     def setUp(self) -> None:
         self.test_url = 'https://www.python.org/'
         self.get_url_http_error = 'http://www.musi-cal.com/cgi-bin/query'
+        self.get_url = 'https://jsonplaceholder.typicode.com/query'
 
     def test_read_url(self):
         http_client = HTTPClientServices(self.test_url)
@@ -20,6 +21,12 @@ class TestHTTPClientServices(unittest.TestCase):
         with self.assertRaises(HTTPError):
             http_client = HTTPClientServices(self.get_url_http_error)
             data = {'spam': 1, 'eggs': 2, 'bacon': 3}
+            http_client.get_request_to_url(data)
+
+    def test_get_request_to_url_type_error(self):
+        with self.assertRaises(TypeError):
+            http_client = HTTPClientServices(self.get_url)
+            data = ('spam', 'eggs', 'bacon')
             http_client.get_request_to_url(data)
 
     def tearDown(self) -> None:
