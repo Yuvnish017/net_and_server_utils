@@ -51,10 +51,6 @@ class SSLSocketClient:
                 print(" ")
                 break
             self.client_instance.sendall(bytes(client_input, 'utf-8'))
-            print(bytes(client_input, 'utf-8'))
-            print(self.client_instance.recv(1024).split(b"\r\n"))
-            # print(str(self.client_instance.recv(1024).split(b"\r\n")[0]))
-            pprint.pprint(self.client_instance.recv(1024).split(b"\r\n"))
             received_data = str(self.client_instance.recv(1024), 'utf-8')
             print(f"Received data: {received_data}")
             with open(filename, 'a', encoding='utf-8') as file:
