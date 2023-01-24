@@ -19,3 +19,9 @@ class HTTPClientServices:
         with urlopen(query_url) as webdata:
             print(webdata.read().decode('utf-8'))
 
+    def post_request_to_url(self, data):
+        data = urllib.parse.urlencode(data)
+        data = data.encode('ascii')
+        with urlopen(self.url, data) as webdata:
+            print(webdata.read().decode('utf-8'))
+
