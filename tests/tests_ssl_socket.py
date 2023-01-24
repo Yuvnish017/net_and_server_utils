@@ -7,13 +7,14 @@ import io
 
 class TestSSLSocket(unittest.TestCase):
     def setUp(self) -> None:
-        self.server_hostname_with_ssl_certificate = 'www.python.org'
+        self.server_hostname_with_ssl_certificate = '127.0.0.1'
         self.server_hostname_without_ssl_certificate = 'www.expired.badssl.com'
-        self.port = 443
+        self.port = 11000
+        self.port_server = 12000
         self.response_file = 'socket_server_response.txt'
         self.certificates = "/etc/ssl/certs/ca-bundle.crt"
-        self.server_certificate_file = None
-        self.server_private_key_file = None
+        self.server_certificate_file = '/Users/yuvnish.malhotra/Desktop/python_training_experiments/certificate.pem'
+        self.server_private_key_file = '/Users/yuvnish.malhotra/Desktop/python_training_experiments/key.pem'
 
     def tests_client_class_import(self):
         SSLSocketClient()
@@ -35,13 +36,14 @@ class TestSSLSocket(unittest.TestCase):
 
     def tests_connect_to_server_with_ssl_certificate(self):
         curr_client = SSLSocketClient()
-        curr_client.default_context_creation()
+        curr_client.manual_context_creation(self.server_certificate_file)
         curr_client.connect_to_server(self.server_hostname_with_ssl_certificate,
                                       self.port)
 
     def tests_communicate_and_save(self):
         curr_client = SSLSocketClient()
         curr_client.default_context_creation()
+        # curr_client.manual_context_creation(self.server_certificate_file)
         curr_client.connect_to_server(self.server_hostname_with_ssl_certificate,
                                       self.port)
         curr_client.communicate_and_save(self.response_file)
