@@ -24,7 +24,7 @@ class SSLSocketClient:
                                                         server_hostname=self.server_hostname)
         try:
             self.client_instance.connect((self.server_hostname, self.port))
-        except ssl.SSL_ERROR_INVALID_ERROR_CODE:
+        except ssl.SSLCertVerificationError:
             print('the server hostname provided does not have ssl certificate')
             print('try another hostname')
 
@@ -38,7 +38,7 @@ class SSLSocketClient:
                 print("disconnecting from the server...")
                 print(" ")
                 break
-            self.client_instance.sendall(client_input)
+            self.client_instance.sendall(client_input.encode('utf-8'))
             received_data = self.client_instance.recv(1024).split(b"\r\n")
             print(f"Received data: {received_data}")
 
@@ -49,7 +49,7 @@ class SSLSocketClient:
                 print("disconnecting from the server....")
                 print(" ")
                 break
-            self.client_instance.sendall(client_input)
+            self.client_instance.sendall(client_input.encode('utf-8'))
             received_data = self.client_instance.recv(1024).split(b"\r\n")
             print(f"Received data: {received_data}")
             with open(filename, 'a') as file:

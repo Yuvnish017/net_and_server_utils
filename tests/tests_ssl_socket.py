@@ -6,7 +6,7 @@ from network_utils.src.net_and_server_utils.ssl_socket import SSLSocketClient
 class TestSSLSocket(unittest.TestCase):
     def setUp(self) -> None:
         self.server_hostname_with_ssl_certificate = 'www.python.org'
-        self.server_hostname_without_ssl_certificate = 'https://www.expired.badssl.com/'
+        self.server_hostname_without_ssl_certificate = 'www.expired.badssl.com'
         self.port = 443
         self.response_file = 'socket_server_response.txt'
         self.certificates = "/etc/ssl/certs/ca-bundle.crt"
