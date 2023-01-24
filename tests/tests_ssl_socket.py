@@ -7,13 +7,18 @@ class TestSSLSocket(unittest.TestCase):
         self.server_hostname = 'www.python.org'
         self.port = 443
         self.response_file = 'socket_server_response.txt'
+        self.certificates = "/etc/ssl/certs/ca-bundle.crt"
 
     def tests_client_class_import(self):
         SSLSocketClient()
 
-    def tests_context_creation(self):
+    def tests_default_context_creation(self):
         curr_client = SSLSocketClient()
-        curr_client.context_creation()
+        curr_client.default_context_creation()
+
+    def tests_manual_context_creation(self):
+        curr_client = SSLSocketClient()
+        curr_client.manual_context_creation(self.certificates)
 
     def tests_connect_to_server(self):
         curr_client = SSLSocketClient()

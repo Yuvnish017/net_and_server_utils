@@ -10,8 +10,12 @@ class SSLSocketClient:
         self.client_instance = None
         self.server_cert = None
 
-    def context_creation(self):
+    def default_context_creation(self):
         self.context = ssl.create_default_context()
+
+    def manual_context_creation(self, certificates_location):
+        self.context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+        self.context.load_verify_locations(certificates_location)
 
     def connect_to_server(self, server_hostname, port_number):
         self.server_hostname = server_hostname
@@ -46,4 +50,3 @@ class SSLSocketClient:
             print(f"Received data: {received_data}")
             with open(filename, 'a') as file:
                 file.write(received_data)
-
