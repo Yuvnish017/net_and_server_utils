@@ -1,5 +1,8 @@
 import urllib
 from urllib.request import urlopen
+import urllib.request
+import urllib.parse
+from urllib.error import HTTPError
 
 
 class HTTPClientServices:
@@ -9,3 +12,10 @@ class HTTPClientServices:
     def read_url(self, num_bytes):
         with urlopen(self.url) as webdata:
             print(webdata.read(num_bytes).decode('utf-8'))
+
+    def get_request_to_url(self, data):
+        params = urllib.parse.urlencode(data)
+        query_url = self.url + '?%s'%params
+        with urlopen(query_url) as webdata:
+            print(webdata.read().decode('utf-8'))
+
