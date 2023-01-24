@@ -53,4 +53,4 @@ class SSLSocketClient:
             received_data = self.client_instance.recv(1024).split(b"\r\n")
             print(f"Received data: {received_data}")
             with open(filename, 'a') as file:
-                file.writelines(received_data)
+                file.writelines([received.decode('utf-8') + '\n' for received in received_data])
