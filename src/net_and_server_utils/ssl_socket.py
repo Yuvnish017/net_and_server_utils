@@ -22,7 +22,11 @@ class SSLSocketClient:
         self.port = port_number
         self.client_instance = self.context.wrap_socket(socket.socket(socket.AF_INET),
                                                         server_hostname=self.server_hostname)
-        self.client_instance.connect((self.server_hostname, self.port))
+        try:
+            self.client_instance.connect((self.server_hostname, self.port))
+        except ssl.SSL_ERROR_INVALID_ERROR_CODE:
+            print('the server hostname provided does not have ssl certificate')
+            print('try another hostname')
 
     def get_server_certificate(self):
         self.server_cert = self.client_instance.getpeercert()

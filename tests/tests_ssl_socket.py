@@ -1,10 +1,12 @@
+import ssl
 import unittest
 from network_utils.src.net_and_server_utils.ssl_socket import SSLSocketClient
 
 
 class TestSSLSocket(unittest.TestCase):
     def setUp(self) -> None:
-        self.server_hostname = 'www.python.org'
+        self.server_hostname_with_ssl_certificate = 'www.python.org'
+        self.server_hostname_without_ssl_certificate = 'https://www.expired.badssl.com/'
         self.port = 443
         self.response_file = 'socket_server_response.txt'
         self.certificates = "/etc/ssl/certs/ca-bundle.crt"
@@ -20,15 +22,24 @@ class TestSSLSocket(unittest.TestCase):
         curr_client = SSLSocketClient()
         curr_client.manual_context_creation(self.certificates)
 
-    def tests_connect_to_server(self):
+    def tests_ssl_cert_verification_error(self):
+        with self.assertRaises(ssl.SSLCertVerificationError):
+            curr_client = SSLSocketClient()
+            curr_client.default_context_creation()
+            curr_client.connect_to_server(self.server_hostname_without_ssl_certificate,
+                                          self.port)
+
+    def tests_connect_to_server_with_ssl_certificate(self):
         curr_client = SSLSocketClient()
-        curr_client.context_creation()
-        curr_client.connect_to_server(self.server_hostname, self.port)
+        curr_client.default_context_creation()
+        curr_client.connect_to_server(self.server_hostname_with_ssl_certificate,
+                                      self.port)
 
     def tests_communicate_and_save(self):
         curr_client = SSLSocketClient()
-        curr_client.context_creation()
-        curr_client.connect_to_server(self.server_hostname, self.port)
+        curr_client.default_context_creation()
+        curr_client.connect_to_server(self.server_hostname_with_ssl_certificate,
+                                      self.port)
         curr_client.communicate_and_save(self.response_file)
         count = 0
         with open(self.response_file, 'r') as file:
