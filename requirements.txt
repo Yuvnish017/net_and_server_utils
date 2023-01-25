@@ -7,7 +7,6 @@ cryptography==39.0.0
 Cython==0.29.33
 dl==0.1.0
 eventlet==0.33.3
-flake8==6.0.0
 gevent==22.10.2
 greenlet==2.0.1
 HTMLParser==0.0.2
