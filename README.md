@@ -1,4 +1,5 @@
 # net_and_server_utils
+[![Coverage Status](https://coveralls.io/repos/github/Yuvnish017/net_and_server_utils/badge.svg?branch=master)](https://coveralls.io/github/Yuvnish017/net_and_server_utils?branch=master)
 
 The project aims at creating a library for following 7 functionalities using Python standard libraries only: -
 - API to access various services via HTTP as a client. For example, downloadingdata or interacting with a REST-based API -> urlib
