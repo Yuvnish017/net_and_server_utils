@@ -126,7 +126,7 @@ class SSLSocketServer:
         accepts the requests from the client and processes it
         """
         while True:
-            new_socket, from_addr = self.server_socket.accept()
+            new_socket, _ = self.server_socket.accept()
             conn_stream = self.context.wrap_socket(new_socket, server_side=True)
             try:
                 data = str(conn_stream.recv(1024), 'utf-8')

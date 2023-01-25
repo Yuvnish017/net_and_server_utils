@@ -4,12 +4,15 @@ Test cases for ssl_socket module of net_and_server_utils
 
 import ssl
 import unittest
+import sys
+sys.path.append('../')
 from network_utils.src.net_and_server_utils.ssl_socket import SSLSocketClient, SSLSocketServer
-from unittest import mock
-import io
 
 
 class TestSSLSocket(unittest.TestCase):
+    """
+    Test cases class
+    """
     def setUp(self) -> None:
         """
         set up fixture for the test cases.
@@ -17,7 +20,7 @@ class TestSSLSocket(unittest.TestCase):
         Change the server hostnames and ports accordingly prior to running the tests
         :return:
         """
-        self.server_hostname_with_ssl_certificate = 'www.python.org'
+        self.server_hostname_with_ssl_certificate = 'http://www.python.org/'
         self.server_hostname_without_ssl_certificate = 'www.expired.badssl.com'
         self.server_creation_hostaddr = '127.0.0.1'
         self.port = 443

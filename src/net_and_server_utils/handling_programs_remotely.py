@@ -95,4 +95,4 @@ class XMLRPCServerCreation:
             self.server.serve_forever()
         except KeyboardInterrupt:
             print('closing server...')
-            self.server.close()
+            self.server.shutdown()

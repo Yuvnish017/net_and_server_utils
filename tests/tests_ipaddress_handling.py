@@ -7,7 +7,10 @@ from ipaddress import AddressValueError, NetmaskValueError
 import os
 import io
 from unittest import mock
-from network_utils.src.net_and_server_utils.ipaddress_handling import IPv4NetworkHandling, IPv6NetworkHandling
+import sys
+sys.path.append('../')
+from network_utils.src.net_and_server_utils.ipaddress_handling import IPv4NetworkHandling
+from network_utils.src.net_and_server_utils.ipaddress_handling import IPv6NetworkHandling
 
 
 class TestsIPAddressHandling(unittest.TestCase):

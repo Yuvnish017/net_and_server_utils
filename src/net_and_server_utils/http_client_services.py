@@ -32,7 +32,8 @@ class HTTPClientServices:
         :raises TypeError: when the data passed is in wrong format
         """
         params = urllib.parse.urlencode(data)
-        query_url = self.url + '?%s' % params
+        # query_url = self.url + '?%s' % params
+        query_url = f'{self.url}?%{params}'
         with urlopen(query_url) as webdata:
             print(webdata.read().decode('utf-8'))
 
