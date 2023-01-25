@@ -91,4 +91,8 @@ class XMLRPCServerCreation:
         """
         for starting the server for forever
         """
-        self.server.serve_forever()
+        try:
+            self.server.serve_forever()
+        except KeyboardInterrupt:
+            print('closing server...')
+            self.server.close()
