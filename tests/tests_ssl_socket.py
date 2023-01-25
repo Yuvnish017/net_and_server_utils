@@ -20,7 +20,7 @@ class TestSSLSocket(unittest.TestCase):
         Change the server hostnames and ports accordingly prior to running the tests
         :return:
         """
-        self.server_hostname_with_ssl_certificate = 'http://www.python.org/'
+        self.server_hostname_with_ssl_certificate = 'www.python.org'
         self.server_hostname_without_ssl_certificate = 'www.expired.badssl.com'
         self.server_creation_hostaddr = '127.0.0.1'
         self.port = 443
@@ -59,7 +59,7 @@ class TestSSLSocket(unittest.TestCase):
         tests successful connection to the server
         """
         curr_client = SSLSocketClient()
-        curr_client.manual_context_creation(self.server_certificate_file)
+        curr_client.default_context_creation()
         curr_client.connect_to_server(self.server_hostname_with_ssl_certificate,
                                       self.port)
 
