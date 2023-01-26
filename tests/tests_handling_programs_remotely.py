@@ -4,8 +4,8 @@ Test Cases for handling_programs_remotely module of net_and_server_utils
 
 import unittest
 import sys
-sys.path.append('../')
-from network_utils.src.net_and_server_utils.handling_programs_remotely import XMLRPCClientInterface
+sys.path.append('src')
+from net_and_server_utils.handling_programs_remotely import XMLRPCClientInterface
 
 
 class TestHandlingProgramsRemotely(unittest.TestCase):

@@ -5,7 +5,7 @@ Test cases for ssl_socket module of net_and_server_utils
 import ssl
 import unittest
 import sys
-sys.path.append('../')
+sys.path.append('src')
 from network_utils.src.net_and_server_utils.ssl_socket import SSLSocketClient, SSLSocketServer
 
 

@@ -7,8 +7,8 @@ import io
 from urllib.error import HTTPError
 from unittest import mock
 import sys
-sys.path.append('../')
-from network_utils.src.net_and_server_utils.http_client_services import HTTPClientServices
+sys.path.append('src')
+from net_and_server_utils.http_client_services import HTTPClientServices
 
 
 class TestHTTPClientServices(unittest.TestCase):

@@ -8,7 +8,7 @@ import os
 import io
 from unittest import mock
 import sys
-sys.path.append("src")
+sys.path.append('src')
 from net_and_server_utils.ipaddress_handling import IPv4NetworkHandling
 from net_and_server_utils.ipaddress_handling import IPv6NetworkHandling
 

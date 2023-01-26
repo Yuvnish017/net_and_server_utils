@@ -4,8 +4,8 @@ Test Cases for socketserver_creation module of net_and_server_utils
 
 import unittest
 import sys
-sys.path.append('../')
-from network_utils.src.net_and_server_utils.socketserver_creation import TCPServerCreation, UDPServerCreation
+sys.path.append('src')
+from net_and_server_utils.socketserver_creation import TCPServerCreation, UDPServerCreation
 
 
 class TestSocketServerCreation(unittest.TestCase):
