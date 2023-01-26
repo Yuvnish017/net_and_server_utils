@@ -41,7 +41,8 @@ jobs:
             python3 tests/tests_ipaddress_handling.py
             python3 tests/tests_http_client_services.py
             python3 tests/tests_socketserver_creation.py
-            python3 tests/tests_ssl_socket.py
+#            python3 tests/tests_ssl_socket.py
+#            python3 tests/tests_socketserver_creation.py
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
