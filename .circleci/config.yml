@@ -37,7 +37,7 @@ jobs:
       - run:
           name: Run tests
           # This assumes pytest is installed via the install-package step above
-          command: 
+          command: |
             python3 tests/tests_ipaddress_handling.py
             python3 tests/tests_http_client_services.py
             python3 tests/tests_socketserver_creation.py
