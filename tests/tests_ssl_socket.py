@@ -6,7 +6,7 @@ import ssl
 import unittest
 import sys
 sys.path.append('src')
-from network_utils.src.net_and_server_utils.ssl_socket import SSLSocketClient, SSLSocketServer
+from net_and_server_utils.ssl_socket import SSLSocketClient, SSLSocketServer
 
 
 class TestSSLSocket(unittest.TestCase):
