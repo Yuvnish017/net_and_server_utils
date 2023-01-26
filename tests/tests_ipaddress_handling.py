@@ -7,8 +7,8 @@ from ipaddress import AddressValueError, NetmaskValueError
 import os
 import io
 from unittest import mock
-# import sys
-# sys.path.append('../')
+import sys
+sys.path.append('../')
 from ..src.net_and_server_utils.ipaddress_handling import IPv4NetworkHandling
 from ..src.net_and_server_utils.ipaddress_handling import IPv6NetworkHandling
 
