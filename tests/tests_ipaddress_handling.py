@@ -9,8 +9,8 @@ import io
 from unittest import mock
 import sys
 sys.path.append('../')
-from network_utils.src.net_and_server_utils.ipaddress_handling import IPv4NetworkHandling
-from network_utils.src.net_and_server_utils.ipaddress_handling import IPv6NetworkHandling
+from src.net_and_server_utils.ipaddress_handling import IPv4NetworkHandling
+from src.net_and_server_utils.ipaddress_handling import IPv6NetworkHandling
 
 
 class TestsIPAddressHandling(unittest.TestCase):
