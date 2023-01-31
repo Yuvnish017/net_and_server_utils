@@ -79,7 +79,7 @@ class SSLSocketClient:
                 print("disconnecting from the server....")
                 print(" ")
                 break
-            self.client_instance.sendall(bytes(client_input, 'utf-8'))
+            self.client_instance.sendall(bytes(client_input + '\n', 'utf-8'))
             received_data = str(self.client_instance.recv(1024), 'utf-8')
             print(f"Received data: {received_data}")
             with open(filename, 'a', encoding='utf-8') as file:
