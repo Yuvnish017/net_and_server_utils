@@ -27,8 +27,8 @@ class TestSSLSocket(unittest.TestCase):
         self.port_server = 12000
         self.response_file = 'socket_server_response.txt'
         self.certificates = "/etc/ssl/certs/ca-bundle.crt"
-        self.server_certificate_file = '/Users/yuvnish.malhotra/Desktop/python_training_experiments/certificate.pem'
-        self.server_private_key_file = '/Users/yuvnish.malhotra/Desktop/python_training_experiments/key.pem'
+        self.server_certificate_file = 'ssl_server_certificate.pem'
+        self.server_private_key_file = 'ssl_server_key.pem'
 
     def tests_default_context_creation(self):
         """
