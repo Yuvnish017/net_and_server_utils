@@ -4,7 +4,9 @@ Test cases for ssl_socket module of net_and_server_utils
 
 import ssl
 import unittest
+from unittest import mock
 import sys
+import io
 sys.path.append('src')
 from net_and_server_utils.ssl_socket import SSLSocketClient, SSLSocketServer
 
@@ -71,7 +73,8 @@ class TestSSLSocket(unittest.TestCase):
         curr_client.default_context_creation()
         curr_client.connect_to_server(self.server_hostname_with_ssl_certificate,
                                       self.port)
-        curr_client.communicate()
+        with mock.patch('sys.stdin', io.StringIO('hello\ndisconnect')):
+            curr_client.communicate()
 
     def tests_server_creation(self):
         """
