@@ -76,6 +76,8 @@ class XMLRPCServerCreation:
         :param host: the host address - string
         :param port: the port number - integer
         """
+        self.host = host
+        self.port = port
         self.server = server.SimpleXMLRPCServer((host, port))
         self.server.register_introspection_functions()
 

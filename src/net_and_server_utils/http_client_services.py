@@ -47,3 +47,7 @@ class HTTPClientServices:
         data = data.encode('ascii')
         with urlopen(self.url, data) as webdata:
             print(webdata.read().decode('utf-8'))
+
+
+if __name__ == '__main__':
+    http_client = HTTPClientServices('https://www.python.org')
